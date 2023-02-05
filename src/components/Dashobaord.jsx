@@ -1,11 +1,9 @@
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import FormControl from '@mui/material/FormControl';
 import CardMedia from '@mui/material/CardMedia';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
@@ -14,21 +12,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useSelector, useDispatch } from 'react-redux'
-import { useState,useEffect } from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import { addweather,getFiveCities } from '../Redux/Reducer'
+import Lottie from "lottie-react";
+import { useState, useEffect } from 'react';
+import axios from 'axios'
+import DoctorsData from './Doctorsdata'
 
 function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                Pak Weather Monitoring App
+                Health Care Management System
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -41,169 +36,79 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const theme = createTheme();
 
 export default function Dashobaord() {
-    const _id = useSelector(state => state.user.loginData)
-    const dispatch = useDispatch()
+    const [user, setUser] = useState(null);
 
-    const [user,setUser]=useState(null)
-    useEffect(()=>{
-       const getUser= async ()=>{
-    await fetch("http:/localhost:3007/auth/login/success",
-    {
-        method:'GET',
-        credentials:'include',
-        headers:{
-            Accept:"application/json",
-            "Content-Type":"application/json",
-            "Access-Control-Allow-Credentials":true,
-        },
-    }).then(response=>{
-        if(response.status===200)return response.json()
-        else throw new Error("Authentication FAILED!!!")
-    }).then(resObject=>
-        {
-            setUser(resObject.user)
-        }).catch(err=>{
-            console.log(err)
-        })
-    }
-    getUser()
-    },[])
+    useEffect(() => {
+        axios.get('http://localhost:3007/login/success')
+            .then(res => {
+                setUser(res.data);
+            });
+    }, []);
 
+    // axios.get('http://localhost:3007/login/success')
+    //     .then(res => {
+    //         const user = res.data.message;
+    //         console.log(user);
+    //     });
 
-      const fiveCitiesData=useSelector(state => state.user.fiveCitiesweatherData)
-      console.log("From use selector",fiveCitiesData)
-    const [weatherData, setweatherData] = useState({
-        cityName: "",
-        temperatureUnit: "",
-        _id:_id
-    });
+    console.log(user)
 
-    const Setting = (event) => {
-        const { name, value } = event.target
-        setweatherData((data) => {
-            return {
-                ...data,
-                [name]: value
-            }
-        })
-    }
-
-    const handleSubmit = (event) => {
-        dispatch(addweather(weatherData))
-        event.preventDefault();
-    };
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <AppBar position="relative">
                 <Toolbar>
-                    <ThunderstormIcon sx={{ mr: 2 }} />
+                    <LocalHospitalIcon sx={{ mr: 2 }} />
                     <Typography variant="h6" color="inherit" noWrap user={user}>
-                        Pak Weather Monitoring App
+                        Health Care Management System
+                        {/* {user ? (
+                            <p>Hello, {user.displayName}!</p>
+                        ) : (
+                            <p>Loading...</p>
+                        )} */}
                     </Typography>
                 </Toolbar>
-                
+
             </AppBar>
             <main>
-                {/* Hero unit */}
-                <Box
-                    sx={{
-                        bgcolor: 'background.paper',
-                        pt: 8,
-                        pb: 6,
-                    }}
-                >
-                    <Container maxWidth="sm">
-                        <Typography
-                            component="h1"
-                            variant="h2"
-                            align="center"
-                            color="text.primary"
-                            gutterBottom
-                        >
-                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                                <TextField
-                                    required
-                                    helperText="City name is required"
-                                    fullWidth
-                                    name="cityName"
-                                    label="City Name"
-                                    type="text"
-                                    id="cityName"
-                                    autoComplete="new-password"
-                                    onChange={Setting}
-                                    value={weatherData.cityName}
-                                    sx={{mb: 2 }}
-                                />
-                                <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Temperature Unit</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    required
-                                    helperText="Temperature Unit is required"
-                                    name="temperatureUnit"
-                                    type="text"
-                                    id="temperatureUnit"
-                                    value={weatherData.temperatureUnit}
-                                    label="Age"
-                                    onChange={Setting}
-                                >
-                                    <MenuItem value="F">Farenheit</MenuItem>
-                                    <MenuItem value="C">Celsuis</MenuItem>
-                                </Select>
-                                </FormControl>
-
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                >
-                                    Add City
-                                </Button>
-                            </Box>
-                        </Typography>
-                    </Container>
-                </Box>
                 <Container sx={{ py: 8 }} maxWidth="md">
                     {/* End hero unit */}
                     <Grid container spacing={4}>
-                        {fiveCitiesData.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
+                        {DoctorsData.map((card) => (
+                            <Grid item key={card} xs={12} sm={12} md={12}>
                                 <Card
-                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                                    sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'row' }}
                                 >
-                                    <CardMedia
+                                    {/* <CardMedia
                                         component="img"
                                         sx={{
-                                            // 16:9
-                                            pt: '56.25%',
-                                        }}
-                                        image="https://source.unsplash.com/random"
-                                        alt="random"
-                                    />
-                                    <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography>
-                                        City Name:{card.city_name}
-                                        <br/>
-                                        Temperature:{card.temperature}
-                                        <br/>
-                                        feels_like:{card.feels_like}
-                                        <br/>
-                                        Humidity:
-                                        <br/>
-                                        Sunrise:
-                                        <br/>
-                                        Sunset:
-                                        <br/>
+                                            height: '100%', width: '10%', p: 2
+                                        }}>
+                                            Hi
+                                        <Lottie
+                                            animationData={Excercisegirl}
+                                            loop={true}
+                                            className="animationImage"
+                                        />,
+                                    </CardMedia> */}
 
+                                    <CardContent sx={{ flexGrow: 1 }}>
+                                        <Typography gutterBottom variant="h5" component="h2" style={{ textAlign: 'center' }}>
+                                            {card.name}
+                                        </Typography>
+                                        <Typography>
+                                            <span style={{color:'#9c27b0'}}>No.of opeartion:</span>{card.opeartion}
+                                            <br />
+                                            Days:{card.Days}
+                                            <br />
+                                            OPD Timing:{card.timing}
+                                            <br />
+                                            Specialization:{card.specialization}
+                                            <br />
                                         </Typography>
                                     </CardContent>
-                                    <CardActions>
-                                        <Button size="small">Edit</Button>
-                                        <Button size="small">Delete</Button>
-                                    </CardActions>
+
                                 </Card>
                             </Grid>
                         ))}
@@ -230,36 +135,3 @@ export default function Dashobaord() {
     );
 }
 
-
-
-
-                        {/* {cards.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
-                                <Card
-                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                >
-                                    <CardMedia
-                                        component="img"
-                                        sx={{
-                                            // 16:9
-                                            pt: '56.25%',
-                                        }}
-                                        image="https://source.unsplash.com/random"
-                                        alt="random"
-                                    />
-                                    <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography>
-                                        City Name:
-                                        Temperature:
-                                        Humidity:
-                                        sunrise:
-                                        Sunset:
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small">Edit</Button>
-                                        <Button size="small">Delete</Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        ))} */}

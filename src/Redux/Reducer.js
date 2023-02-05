@@ -29,40 +29,9 @@ export const addLoginUser = createAsyncThunk(
     }
 )
 
-export const addweather = createAsyncThunk(
-    'weather/addweather',
-    async (data, thunkApi) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-            
-        };
-        const res = await fetch('http://localhost:3007/addweather', requestOptions)
-        return res.json();
-    }
-)
-
-export const getFiveCities = createAsyncThunk(
-    'weather/getFiveCities',
-    async (data, thunkApi) => {
-        const requestOptions = {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-            
-        };
-        const res = await fetch('http://localhost:3007/getFiveCities', requestOptions)
-        return res.json();
-    }
-)
-
-
-
 const initialState = {
     userData: [],
     loginData: [],
-    fiveCitiesweatherData:[],
     redirectToDashboard: false
 }
 
@@ -95,26 +64,7 @@ export const addUser = createSlice({
         },
         [addLoginUser.rejected]: (state) => {
             console.log('login Rejected');
-        },
-        [addweather.fulfilled]:(state,action)=>{
-            state.response = action.payload.message;
-            alert("DATA",state.response)
-            console.log('fulfilled')
-        },
-        [addweather.rejected]: (state) => {
-            console.log('login Rejected');
-        },
-        [getFiveCities.fulfilled]:(state,action)=>{
-            state.fiveCitiesweatherData=action.payload
-            console.log('fulfilled',state.fiveCitiesweatherData)
         }
-        // [addEmployeeData.pending]: state => {
-        //     console.log('Signup Pending...');
-        // },
-        // [addEmployeeData.fulfilled]: (state, action) => {
-        //     state.userData = action.payload.data;
-        //     console.log('todo fulfilled...');
-        // }
     }
 
 })

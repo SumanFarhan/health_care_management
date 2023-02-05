@@ -20,8 +20,6 @@ import { useSelector, useDispatch } from 'react-redux'
 const theme = createTheme();
 
 
-
-
 export default function SignUp() {
 
 
