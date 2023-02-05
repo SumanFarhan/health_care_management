@@ -16,7 +16,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Lottie from "lottie-react";
 import { useState, useEffect } from 'react';
 import axios from 'axios'
+import TodayIcon from '@mui/icons-material/Today';
 import DoctorsData from './Doctorsdata'
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import VaccinesIcon from '@mui/icons-material/Vaccines';
+import HealingIcon from '@mui/icons-material/Healing';
+
 
 function Copyright() {
     return (
@@ -26,12 +31,12 @@ function Copyright() {
                 Health Care Management System
             </Link>{' '}
             {new Date().getFullYear()}
+
             {'.'}
         </Typography>
     );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
@@ -73,38 +78,41 @@ export default function Dashobaord() {
             </AppBar>
             <main>
                 <Container sx={{ py: 8 }} maxWidth="md">
-                    {/* End hero unit */}
                     <Grid container spacing={4}>
                         {DoctorsData.map((card) => (
                             <Grid item key={card} xs={12} sm={12} md={12}>
                                 <Card
                                     sx={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'row' }}
                                 >
-                                    {/* <CardMedia
-                                        component="img"
+                                    <CardMedia
                                         sx={{
-                                            height: '100%', width: '10%', p: 2
+                                            height: '100%', width: '36%', p: 2
                                         }}>
-                                            Hi
+                                            
                                         <Lottie
-                                            animationData={Excercisegirl}
+                                            animationData={card.img}
                                             loop={true}
                                             className="animationImage"
                                         />,
-                                    </CardMedia> */}
+                                    </CardMedia>
 
                                     <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography gutterBottom variant="h5" component="h2" style={{ textAlign: 'center' }}>
+                                        <Typography gutterBottom variant="h5" component="h2" style={{ textAlign: 'center',color: "#1976d2", fontWeight: 'bold' }}>
                                             {card.name}
                                         </Typography>
                                         <Typography>
-                                            <span style={{color:'#9c27b0'}}>No.of opeartion:</span>{card.opeartion}
+                                            <span style={{ color: "#1976d2", fontWeight: 'bold', fontSize: '18px' }}>
+                                                No.of opeartion:</span>{card.opeartion}
+                                                <VaccinesIcon sx={{ pt: 0.5 ,ml:2}}/>
                                             <br />
-                                            Days:{card.Days}
+                                            <span style={{ color: "#1976d2", fontWeight: 'bold', fontSize: '18px' }}>Days:</span>{card.Days}
+                                            <TodayIcon sx={{ pt: 0.5 ,ml:2}}/>
                                             <br />
-                                            OPD Timing:{card.timing}
+                                            <span style={{ color: "#1976d2", fontWeight: 'bold', fontSize: '18px' }}>OPD Timing:</span>{card.timing}
+                                            <AccessTimeIcon sx={{ pt: 0.5 ,ml:2}} />
                                             <br />
-                                            Specialization:{card.specialization}
+                                            <span style={{ color: "#1976d2", fontWeight: 'bold', fontSize: '18px' }}>Specialization:</span>{card.specialization}
+                                            <HealingIcon sx={{ pt: 0.5 ,ml:2}}/>
                                             <br />
                                         </Typography>
                                     </CardContent>
@@ -117,17 +125,7 @@ export default function Dashobaord() {
             </main>
             {/* Footer */}
             <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-                <Typography variant="h6" align="center" gutterBottom>
-                    Footer
-                </Typography>
-                <Typography
-                    variant="subtitle1"
-                    align="center"
-                    color="text.secondary"
-                    component="p"
-                >
-                    Something here to give the footer a purpose!
-                </Typography>
+        
                 <Copyright />
             </Box>
             {/* End footer */}
