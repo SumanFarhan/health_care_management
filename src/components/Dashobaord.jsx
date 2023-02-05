@@ -23,6 +23,7 @@ import VaccinesIcon from '@mui/icons-material/Vaccines';
 import HealingIcon from '@mui/icons-material/Healing';
 
 
+
 function Copyright() {
     return (
         <Typography variant="body2" color="text.secondary" align="center">
@@ -41,6 +42,9 @@ function Copyright() {
 const theme = createTheme();
 
 export default function Dashobaord() {
+    const logout = () => {
+        window.open("http://localhost:3007/logout", "_self")
+    }
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -63,16 +67,21 @@ export default function Dashobaord() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <AppBar position="relative">
+
                 <Toolbar>
                     <LocalHospitalIcon sx={{ mr: 2 }} />
                     <Typography variant="h6" color="inherit" noWrap user={user}>
                         Health Care Management System
+
                         {/* {user ? (
                             <p>Hello, {user.displayName}!</p>
                         ) : (
                             <p>Loading...</p>
                         )} */}
+
                     </Typography>
+                    <button className="btn-grad " onClick={logout}>LogOut</button>
+
                 </Toolbar>
 
             </AppBar>
@@ -88,7 +97,7 @@ export default function Dashobaord() {
                                         sx={{
                                             height: '100%', width: '36%', p: 2
                                         }}>
-                                            
+
                                         <Lottie
                                             animationData={card.img}
                                             loop={true}
@@ -96,23 +105,25 @@ export default function Dashobaord() {
                                         />,
                                     </CardMedia>
 
-                                    <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography gutterBottom variant="h5" component="h2" style={{ textAlign: 'center',color: "#1976d2", fontWeight: 'bold' }}>
+                                    <CardContent sx={{ flexGrow: 1 }} >
+                                        <Typography gutterBottom variant="h5" component="h2" style={{ textAlign: 'center', color: "#1976d2", fontWeight: 'bold' }}>
                                             {card.name}
+
                                         </Typography>
+
                                         <Typography>
                                             <span style={{ color: "#1976d2", fontWeight: 'bold', fontSize: '18px' }}>
                                                 No.of opeartion:</span>{card.opeartion}
-                                                <VaccinesIcon sx={{ pt: 0.5 ,ml:2}}/>
+                                            <VaccinesIcon sx={{ pt: 0.5, ml: 2 }} />
                                             <br />
                                             <span style={{ color: "#1976d2", fontWeight: 'bold', fontSize: '18px' }}>Days:</span>{card.Days}
-                                            <TodayIcon sx={{ pt: 0.5 ,ml:2}}/>
+                                            <TodayIcon sx={{ pt: 0.5, ml: 2 }} />
                                             <br />
                                             <span style={{ color: "#1976d2", fontWeight: 'bold', fontSize: '18px' }}>OPD Timing:</span>{card.timing}
-                                            <AccessTimeIcon sx={{ pt: 0.5 ,ml:2}} />
+                                            <AccessTimeIcon sx={{ pt: 0.5, ml: 2 }} />
                                             <br />
                                             <span style={{ color: "#1976d2", fontWeight: 'bold', fontSize: '18px' }}>Specialization:</span>{card.specialization}
-                                            <HealingIcon sx={{ pt: 0.5 ,ml:2}}/>
+                                            <HealingIcon sx={{ pt: 0.5, ml: 2 }} />
                                             <br />
                                         </Typography>
                                     </CardContent>
@@ -125,7 +136,7 @@ export default function Dashobaord() {
             </main>
             {/* Footer */}
             <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        
+
                 <Copyright />
             </Box>
             {/* End footer */}

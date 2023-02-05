@@ -12,9 +12,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from 'react-router-dom'
-import {useState} from 'react'
-import {  addSignupUser } from '../Redux/Reducer'
+import { useState } from 'react'
+import { addSignupUser } from '../Redux/Reducer'
 import { useSelector, useDispatch } from 'react-redux'
+import { GoogleLoginButton } from "react-social-login-buttons"
 
 
 const theme = createTheme();
@@ -27,9 +28,9 @@ export default function SignUp() {
 
   const [signedUp, setsignedUp] = useState({
     userName: "",
-    email:"",
+    email: "",
     password: ""
-    
+
   });
   const Setting = (event) => {
     const { name, value } = event.target
@@ -41,7 +42,7 @@ export default function SignUp() {
     })
   }
 
-  
+
   const handleSubmit = (event) => {
     dispatch(addSignupUser(signedUp))
     event.preventDefault();
@@ -52,9 +53,9 @@ export default function SignUp() {
     });
   };
 
- const google=()=>{
-  window.open("http://localhost:3007/auth/google","_self")
- }
+  const google = () => {
+    window.open("http://localhost:3007/auth/google", "_self")
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -129,9 +130,11 @@ export default function SignUp() {
                 <Link to="/login">
                   Already have an account? Sign in
                 </Link>
-                <Button onClick={google}>Google Login</Button>
               </Grid>
             </Grid>
+            <GoogleLoginButton onClick={google}>
+                  <span>Login with Google</span>
+                </GoogleLoginButton>
           </Box>
         </Box>
       </Container>
