@@ -14,13 +14,15 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Lottie from "lottie-react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLocation } from 'react';
 import axios from 'axios'
 import TodayIcon from '@mui/icons-material/Today';
 import DoctorsData from './Doctorsdata'
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import HealingIcon from '@mui/icons-material/Healing';
+import { useSearchParams, useParams } from 'react-router-dom'
+
 
 
 
@@ -45,14 +47,18 @@ export default function Dashobaord() {
     const logout = () => {
         window.open("http://localhost:3007/logout", "_self")
     }
-    const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        axios.get('http://localhost:3007/login/success')
-            .then(res => {
-                setUser(res.data);
-            });
-    }, []);
+    let { name } = useParams()
+    console.log(name)
+
+    // const [user, setUser] = useState(null);
+
+    // useEffect(() => {
+    //     axios.get('http://localhost:3007/login/success')
+    //         .then(res => {
+    //             setUser(res.data);
+    //         });
+    // }, []);
 
     // axios.get('http://localhost:3007/login/success')
     //     .then(res => {
@@ -60,7 +66,7 @@ export default function Dashobaord() {
     //         console.log(user);
     //     });
 
-    console.log(user)
+    // console.log(user)
 
 
     return (
@@ -70,22 +76,19 @@ export default function Dashobaord() {
 
                 <Toolbar>
                     <LocalHospitalIcon sx={{ mr: 2 }} />
-                    <Typography variant="h6" color="inherit" noWrap user={user}>
+                    <Typography variant="h6" color="inherit" noWrap>
                         Health Care Management System
-
-                        {/* {user ? (
-                            <p>Hello, {user.displayName}!</p>
-                        ) : (
-                            <p>Loading...</p>
-                        )} */}
-
                     </Typography>
-                    <button className="btn-grad " onClick={logout}>LogOut</button>
+                    <button className="btn-grad" onClick={logout}>LogOut</button>
 
                 </Toolbar>
 
             </AppBar>
             <main>
+                <Typography gutterBottom variant="h5" component="h2" style={{ textAlign: 'center', color: "#1976d2", fontWeight: 'bold' ,}}>
+                    <span>Welcome</span> {name}
+
+                </Typography>
                 <Container sx={{ py: 8 }} maxWidth="md">
                     <Grid container spacing={4}>
                         {DoctorsData.map((card) => (
@@ -95,7 +98,7 @@ export default function Dashobaord() {
                                 >
                                     <CardMedia
                                         sx={{
-                                            height: '100%', width: '36%', p: 2
+                                            height: '100%', width: '37%', p: 2
                                         }}>
 
                                         <Lottie

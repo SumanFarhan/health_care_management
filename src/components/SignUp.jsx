@@ -127,9 +127,9 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to="/login">
+                {/* <Link to="/login">
                   Already have an account? Sign in
-                </Link>
+                </Link> */}
               </Grid>
             </Grid>
             <GoogleLoginButton onClick={google}>
