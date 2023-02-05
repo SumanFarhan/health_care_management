@@ -85,7 +85,7 @@ export default function Dashobaord() {
 
             </AppBar>
             <main>
-                <Typography gutterBottom variant="h5" component="h2" style={{ textAlign: 'center', color: "#1976d2", fontWeight: 'bold' ,}}>
+                <Typography variant="h5" component="h2" style={{ textAlign: 'center', color: "#1976d2", fontWeight: 'bold' ,marginTop:'30px'}}>
                     <span>Welcome</span> {name}
 
                 </Typography>
